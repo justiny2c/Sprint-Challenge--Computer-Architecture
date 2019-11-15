@@ -208,39 +208,6 @@ class CPU:
             instruction_size = ((op & 11000000) >> 6) + 1
             pc_set_flag = (op & 0b00010000)  # applies a mask to get pc_set bit
             self.branchtable[op]()
-            # if op == 0b10000010: # LDI (load into register a value)
-            #     operand_a = self.ram[self.pc + 1] # targeted register
-            #     operand_b = self.ram[self.pc + 2] # value to load
-            #     self.reg[operand_a] = operand_b
-            #     # self.pc += 3
 
-            # if op == 0b10100010: # MUL (call alu with paramaters)
-            #     operand_a = self.ram[self.pc + 1]
-            #     operand_b = self.ram[self.pc + 2]
-            #     self.alu("MUL", operand_a, operand_b)
-            #     # self.pc += 3
-
-            # elif op == 0b01000111: # PRN (print value from given register address)
-            #     operand_a = self.ram[self.pc + 1]
-            #     print(self.reg[operand_a])
-            #     # self.pc += 2
-
-            # if op == 0b01000101: # PUSH (push value from register onto stack)
-            #     reg_address = self.ram[self.pc + 1]
-            #     self.sp -= 1
-            #     value = self.reg[reg_address]
-            #     self.ram[self.sp] = value
-
-            # elif op == 0b01000110: # POP
-            #     pop_value = self.ram[self.sp]
-            #     reg_address = self.ram[self.pc + 1]
-            #     self.reg[reg_address] = pop_value
-            #     self.sp += 1
-
-            # elif op == 0b00000001: # HLT (halt cpu)
-            #     self.running = False
-
-            # else:
-            #     pass
             if pc_set_flag != 0b00010000:
                 self.pc += instruction_size
