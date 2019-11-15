@@ -12,17 +12,15 @@ OP6 = 0b00000001  # HALT
 OP7 = 0b01010000  # CALL
 OP8 = 0b00010001  # RET
 OP9 = 0b10100000  # ADD
-OP10 = 0b01010100  # JMP - Jumps PC to an address in given register
-OP11 = 0b01010101  # JEQ - If 'E' flag is set (true, 1), jump to given register
-# JNE - If 'E' flag is clear (false, 0), jump to given register
+OP10 = 0b01010100  # JMP
+OP11 = 0b01010101  # JEQ
 OP12 = 0b01010110
-OP13 = 0b10100111  # CMP - Compares values and sets flags
+OP13 = 0b10100111  # CMP
 
 # check for file arg
 if len(sys.argv) < 2:
     print("usage: ls8.py *insert a program file name as argument*")
     sys.exit(1)
-
 
 class CPU:
     """Main CPU class."""
@@ -62,9 +60,6 @@ class CPU:
         self.pc = jump_address
 
     def cmp(self):
-        # compare two values in regA + regB , set flag accordingly
-
-        # RESET Flags for subsequent compares ?
         self.E = 0
         self.L = 0
         self.G = 0
@@ -95,12 +90,10 @@ class CPU:
         self.reg[self.ram[self.pc + 1]] += self.reg[self.ram[self.pc + 2]]
 
     def call(self):
-
-        # custom push functionality
         next_address = self.pc + 2
         self.sp -= 1
         self.ram[self.sp] = next_address
-        # set pc
+ 
         address = self.reg[self.ram[self.pc + 1]]
         self.pc = address
 
